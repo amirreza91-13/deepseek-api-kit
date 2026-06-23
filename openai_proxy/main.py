@@ -1,7 +1,7 @@
 from fastapi import Request as FastAPIRequest
 from fastapi_offline import FastAPIOffline
 from fastapi.responses import StreamingResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, model_validator
 from typing import List, Optional, Union, Dict, Any
 import time, json, os, uuid
 from datetime import datetime
@@ -21,13 +21,29 @@ AVAILABLE_MODELS = [{"id": "thinking_not_search", "object": "model1","created": 
 
 # ---------- Models ----------
 class ContentPart(BaseModel):
-    type: str
-    text: Optional[str] = None
+    type: str = "text"
+    text: Optional[str] = ""
 
 class Message(BaseModel):
-    role: str
-    content: Union[str, List[ContentPart]]
+    role: str = "user"
+    content: Union[str, List[ContentPart]] = ""
+
     reasoning_content: Optional[str] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def fill_defaults(cls, values):
+        if values is None:
+            return {"role": "user", "content": ""}
+
+        if isinstance(values, dict):
+            values.setdefault("role", "user")
+            values.setdefault("content", "")
+            values.setdefault("reasoning_content", "")
+            return values
+
+        return values
+
 class ChatRequest(BaseModel):
     model_config = {"extra": "ignore"}
     
@@ -37,6 +53,7 @@ class ChatRequest(BaseModel):
     stream_options: Optional[Dict[str, Any]] = None
     temperature: Optional[float] = None
     max_tokens: Optional[int] = None
+    
 # ---------- Helper ----------
 def extract_content(content: Union[str, List[ContentPart]]) -> str:
     if isinstance(content, str):

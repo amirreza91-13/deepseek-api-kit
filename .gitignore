@@ -21,3 +21,4 @@ Thumbs.db
 *.log
 
 .venv*
+package-lock.json
