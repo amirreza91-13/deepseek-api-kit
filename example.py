@@ -9,12 +9,11 @@ HEADERS = {
 }
 
 MODELS = {
-    "thinking_not_search": True,
+    "thinking_not_search": False,
     "thinking_search": True,
-    "not_thinking_not_search": True,
-    "not_thinking_search": True
+    "not_thinking_not_search": False,
+    "not_thinking_search": False
 }
-
 TEST_STREAMING = {
     "stream": False,
     "non_stream": True,
