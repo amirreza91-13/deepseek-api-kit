@@ -24,3 +24,5 @@ Thumbs.db
 package-lock.json
 
 .n/
+
+common/cookies.json
