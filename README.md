@@ -172,7 +172,7 @@ Its security, reliability, and provider compatibility should be validated before
 
 ## License
 
-Check the repository for a declared license before reusing or redistributing this project.
+A `LICENSE` file is present and declares the MIT License. Its copyright notice names `mohammad-mousavi005`; confirm that attribution is correct and that you have the necessary rights to publish and license all included code before relying on or changing that notice.
 
 ---
 
